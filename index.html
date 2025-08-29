@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaTeX Definer</title>
+    
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main terminal container -->
+    <div id="terminal">
+        <div id="output"></div>
+        <div class="input-line">
+            <span class="prompt-char">&gt;</span>
+            <!-- The input is now wrapped for positioning the cursor -->
+            <div class="input-wrapper">
+                <input type="text" id="commandInput" autocomplete="off" autofocus>
+                <!-- Ghost element for measuring text width -->
+                <span id="input-ghost"></span>
+                <!-- The visible blinking cursor -->
+                <span id="cursor-blink"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Definition Editor Modal -->
+    <div id="editor-modal" class="hidden">
+        <h2 class="font-bold" style="font-size: 1.5rem; margin-bottom: 1rem;">Add/Edit Term</h2>
+        <div class="editor-container">
+            <div class="editor-panel">
+                <label for="term-input">Term:</label>
+                <input type="text" id="term-input" placeholder="e.x. euler's identity">
+                
+                <label for="aliases-input">Aliases (comma-separated):</label>
+                <input type="text" id="aliases-input" placeholder="e.x. euler's equation">
+
+                <label for="tags-input">Tags (comma-separated):</label>
+                <input type="text" id="tags-input" placeholder="e.g., complex numbers, physics">
+
+                <label for="definition-input">Definition (supports LaTeX):</label>
+                <textarea id="definition-input"></textarea>
+            </div>
+            <div class="preview-panel" id="preview-output"></div>
+        </div>
+        <div class="editor-footer">
+            <span id="editor-message"></span>
+            <button id="cancel-btn" class="cancel">Cancel</button>
+            <button id="save-btn">Save</button>
+        </div>
+    </div>
+
+
+    <!-- Default definitions data -->
+    <script id="definitionsData" type="application/json">
+    [
+        {
+            "term": "rref",
+            "aliases": ["reduced row echelon form"],
+            "tags": ["linalg", "matrices"],
+            "definition": "A matrix is in reduced row echelon form if it satisfies the following conditions:\n1. All rows consisting entirely of zeros are at the bottom.\n2. The first non-zero number in any non-zero row (the leading entry or pivot) is 1.\n3. Each leading 1 is to the right of the leading 1s in the rows above it.\n4. Every other entry in a column containing a leading 1 is zero.\nExample: $$\\begin{bmatrix} 1 & 0 & 5 & 0 \\\\ 0 & 1 & 2 & 0 \\\\ 0 & 0 & 0 & 1 \\\\ 0 & 0 & 0 & 0 \\end{bmatrix}$$"
+        },
+        {
+            "term": "newton's second law",
+            "aliases": ["f=ma"],
+            "tags": ["physics"],
+            "definition": "Newton's Second Law of Motion states that the acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass. The formula is: $$F_{net} = ma$$ Where $F_{net}$ is the net force, $m$ is the mass, and $a$ is the acceleration."
+        }
+    ]
+    </script>
+
+    <!-- KaTeX JS -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+    <!-- Main Application Logic -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>
