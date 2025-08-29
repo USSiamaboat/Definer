@@ -133,11 +133,14 @@ const UI = (() => {
         }
         previewOutput.innerHTML = ""
         updatePreview()
-        editorModal.classList.remove("hidden")
+        editorModal.classList.add("visible")
         termInput.focus()
     }
 
-    function closeEditor() { editorModal.classList.add("hidden"); commandInput.focus() }
+    function closeEditor() { 
+        editorModal.classList.remove("visible")
+        commandInput.focus() 
+    }
     
     function updatePreview() {
         const sanitizedText = Utils.sanitizeHTML(definitionInput.value)
@@ -191,16 +194,16 @@ const Commands = (() => {
                 UI.renderBlock(commandEchoHTML)
                 return
             case "edit":
-                if (!searchTerm) { result = { html: "Usage: edit [term]", className: "text-yellow-400" } } 
+                if (!searchTerm) { result = { html: "Usage: edit [term]", className: "terminal-warning" } } 
                 else {
                     const { definition, index } = findDefinitionAndIndex(searchTerm)
-                    if (definition) {
+                    if (definition) { 
                         currentEditIndex = index 
                         UI.openEditor(definition) 
                         UI.renderBlock(commandEchoHTML)
                         return
                     } 
-                    else { result = { html: `Error: Term '${Utils.sanitizeHTML(searchTerm)}' not found.`, className: "text-red-400" } }
+                    else { result = { html: `Error: Term '${Utils.sanitizeHTML(searchTerm)}' not found.`, className: "terminal-error" } }
                 }
                 break
             case "rm":
@@ -210,7 +213,7 @@ const Commands = (() => {
             case "find": result = findDefinition(searchTerm); break
             case "export":
                 exportDefinitions()
-                result = { html: "Exporting definitions...", className: "text-green-400" }
+                result = { html: "Exporting definitions...", className: "terminal-success" }
                 break
             case "import":
                 result = importDefinitions(commandArgs)
@@ -267,11 +270,11 @@ const Commands = (() => {
         if (currentEditIndex !== null) { // Edit mode
             Data.updateDefinition(currentEditIndex, { term, aliases, tags, definition })
             message = `Definition for '${Utils.sanitizeHTML(term)}' updated.`
-            messageClass = "text-green-400"
+            messageClass = "terminal-success"
         } else { // Add mode
             Data.addDefinition({ term, aliases, tags, definition })
             message = `Definition for '${Utils.sanitizeHTML(term)}' saved.`
-            messageClass = "text-green-400"
+            messageClass = "terminal-success"
         }
         
         Data.persist()
@@ -284,23 +287,23 @@ const Commands = (() => {
         const termToDelete = args.slice(1).filter(arg => arg !== confirmFlag).join(" ")
 
         if (!termToDelete) {
-            return { html: "Usage: delete [term]", className: "text-yellow-400" }
+            return { html: "Usage: delete [term]", className: "terminal-warning" }
         }
 
         const { definition, index } = findDefinitionAndIndex(termToDelete)
 
         if (!definition) {
-            return { html: `Error: Term '${Utils.sanitizeHTML(termToDelete)}' not found.`, className: "text-red-400" }
+            return { html: `Error: Term '${Utils.sanitizeHTML(termToDelete)}' not found.`, className: "terminal-error" }
         }
 
         if (!args.includes(confirmFlag)) {
-            const confirmationMessage = `This is a destructive action. To confirm, type: <br><span class="font-bold">delete ${Utils.sanitizeHTML(termToDelete)} ${confirmFlag}</span>`
-            return { html: confirmationMessage, className: "text-yellow-400" }
+            const confirmationMessage = `This is a destructive action. To confirm, type: <br><span class="terminal-text-bold">delete ${Utils.sanitizeHTML(termToDelete)} ${confirmFlag}</span>`
+            return { html: confirmationMessage, className: "terminal-warning" }
         }
 
         Data.deleteDefinition(index)
         Data.persist()
-        return { html: `Definition for '${Utils.sanitizeHTML(definition.term)}' has been deleted.`, className: "text-green-400" }
+        return { html: `Definition for '${Utils.sanitizeHTML(definition.term)}' has been deleted.`, className: "terminal-success" }
     }
 
     function exportDefinitions() {
@@ -323,9 +326,9 @@ const Commands = (() => {
                 Data.replaceAllDefinitions(pendingImportData)
                 Data.persist()
                 pendingImportData = null
-                return { html: "Definitions successfully imported and saved.", className: "text-green-400" }
+                return { html: "Definitions successfully imported and saved.", className: "terminal-success" }
             } else {
-                return { html: "No file loaded. Please run 'import' first.", className: "text-yellow-400" }
+                return { html: "No file loaded. Please run 'import' first.", className: "terminal-warning" }
             }
         }
 
@@ -347,11 +350,11 @@ const Commands = (() => {
                         throw new Error("Invalid format: Objects must contain 'term' and 'definition' keys.")
                     }
                     pendingImportData = data
-                    const message = `File loaded successfully. Found ${data.length} definitions.<br>To replace current definitions, type: <span class="font-bold">import --confirm</span>`
-                    UI.renderBlock(`<div class="text-yellow-400">${message}</div>`)
+                    const message = `File loaded successfully. Found ${data.length} definitions.<br>To replace current definitions, type: <span class="terminal-text-bold">import --confirm</span>`
+                    UI.renderBlock(`<div class="terminal-warning">${message}</div>`)
                 } catch (error) {
                     const errorMessage = `Error reading file: ${error.message}`
-                    UI.renderBlock(`<div class="text-red-400">${errorMessage}</div>`)
+                    UI.renderBlock(`<div class="terminal-error">${errorMessage}</div>`)
                     pendingImportData = null
                 }
             }
@@ -362,24 +365,24 @@ const Commands = (() => {
     }
 
     function formatDefinitionOutput(def) {
-        let outputHTML = `<p><span class="font-bold text-green-400">Term:</span> ${Utils.sanitizeHTML(def.term)}</p>`
+        let outputHTML = `<p><span class="terminal-text-bold terminal-success">Term:</span> ${Utils.sanitizeHTML(def.term)}</p>`
         
         const aliasesText = (def.aliases && def.aliases.length > 0)
             ? Utils.sanitizeHTML(def.aliases.join(", "))
             : "none"
-        outputHTML += `<p><span class="font-bold text-green-400">Aliases:</span> ${aliasesText}</p>`
+        outputHTML += `<p><span class="terminal-text-bold terminal-success">Aliases:</span> ${aliasesText}</p>`
 
         const tagsText = (def.tags && def.tags.length > 0)
             ? Utils.sanitizeHTML(def.tags.join(", "))
             : "none"
-        outputHTML += `<p><span class="font-bold text-green-400">Tags:</span> ${tagsText}</p>`
+        outputHTML += `<p><span class="terminal-text-bold terminal-success">Tags:</span> ${tagsText}</p>`
         
         outputHTML += `<br><p>${Utils.sanitizeHTML(def.definition)}</p>`
         return { html: outputHTML }
     }
 
     function findDefinition(term) {
-        if (!term) { return { html: "Usage: find [term]", className: "text-yellow-400" } }
+        if (!term) { return { html: "Usage: find [term]", className: "terminal-warning" } }
         
         const { exactMatch, partialMatches } = Data.find(term)
 
@@ -394,27 +397,27 @@ const Commands = (() => {
         if (partialMatches.length > 1) {
             const possibleTerms = partialMatches.map(def => `- ${Utils.sanitizeHTML(def.term)}`).join("<br>")
             const message = `Ambiguous term. Did you mean one of these?<br>${possibleTerms}`
-            return { html: message, className: "text-yellow-400" }
+            return { html: message, className: "terminal-warning" }
         }
 
         const suggestion = Data.getSuggestion(term.toLowerCase())
         const message = suggestion 
             ? `Error: Definition for '${Utils.sanitizeHTML(term)}' not found. Did you mean '${Utils.sanitizeHTML(suggestion)}'?`
             : `Error: Definition for '${Utils.sanitizeHTML(term)}' not found.`
-        return { html: message, className: "text-red-400" }
+        return { html: message, className: "terminal-error" }
     }
 
     function showHelp() {
         const helpText = `
-<p><span class="font-bold">add</span>                 - Opens an editor to add a new definition.</p>
-<p><span class="font-bold">edit [term]</span>         - Opens an editor to modify an existing definition.</p>
-<p><span class="font-bold">delete, rm</span>          - Deletes a term after confirmation.</p>
-<p><span class="font-bold">find [term]</span>         - Displays the definition for a term.</p>
-<p><span class="font-bold">list, ls</span>            - Lists all terms, or only terms with a specific [tag].</p>
-<p><span class="font-bold">import</span>              - Imports definitions from a JSON file.</p>
-<p><span class="font-bold">export</span>              - Exports all definitions to a JSON file.</p>
-<p><span class="font-bold">clear</span>               - Clears the terminal screen and command history.</p>
-<p><span class="font-bold">help</span>                - Shows this help message.</p>
+<p><span class="terminal-text-bold">add</span>                 - Opens an editor to add a new definition.</p>
+<p><span class="terminal-text-bold">edit [term]</span>         - Opens an editor to modify an existing definition.</p>
+<p><span class="terminal-text-bold">delete, rm</span>          - Deletes a term after confirmation.</p>
+<p><span class="terminal-text-bold">find [term]</span>         - Displays the definition for a term.</p>
+<p><span class="terminal-text-bold">list, ls</span>            - Lists all terms, or only terms with a specific [tag].</p>
+<p><span class="terminal-text-bold">import</span>              - Imports definitions from a JSON file.</p>
+<p><span class="terminal-text-bold">export</span>              - Exports all definitions to a JSON file.</p>
+<p><span class="terminal-text-bold">clear</span>               - Clears the terminal screen and command history.</p>
+<p><span class="terminal-text-bold">help</span>                - Shows this help message.</p>
 `
         return { html: helpText }
     }
@@ -429,9 +432,9 @@ const Commands = (() => {
         }
         if (termsToList.length === 0) {
             const message = `No terms found${sanitizedTag ? ` with tag '${sanitizedTag}'` : ""}.`
-            return { html: message, className: "text-yellow-400" }
+            return { html: message, className: "terminal-warning" }
         }
-        let termsListHTML = `<p class="text-green-400">${title}</p>`
+        let termsListHTML = `<p class="terminal-success">${title}</p>`
         termsToList.sort((a, b) => a.term.toLowerCase().localeCompare(b.term.toLowerCase()))
         termsToList.forEach(def => {
             let line = `- ${Utils.sanitizeHTML(def.term)}`
@@ -492,7 +495,7 @@ const App = (() => {
         const editorModal = document.getElementById("editor-modal")
         const activeElement = document.activeElement
         
-        if (!editorModal.classList.contains("hidden")) {
+        if (editorModal.classList.contains("visible")) {
             return
         }
 
