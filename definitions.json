@@ -1,0 +1,133 @@
+[
+  {
+    "term": "asymptotic notation",
+    "aliases": [
+      "big o",
+      "big theta",
+      "big omega",
+      "asymp notation"
+    ],
+    "tags": [
+      "cs",
+      "376"
+    ],
+    "definition": "$f(n) \\in O(g(n))$ if $\\exists c, n_0 \\ \\forall n \\geq n_0, \\ f(n) \\leq cg(n)$\nIt is sufficient to show that $\\lim_{n \\to \\infty}\\frac{f(n)}{g(n)}$ is finite\n\n$f(n) \\in \\Omega(g(n))$ if $\\exists c, n_0 \\ \\forall n \\geq n_0, f(n) \\geq c g(n)$\nIt is sufficient to show that $\\lim_{n \\to \\infty} \\frac{f(n)}{g(n)} > 0$\n\n$f(n) \\in \\Theta(g(n))$ if $f(n) \\in O(g(n)$ and $f(n) \\in \\Omega(g(n))$\nIt is sufficient to show that $\\lim_{n \\to \\infty} \\frac{f(n)}{g(n)} > 0$ and is finite"
+  },
+  {
+    "term": "augmented matrix",
+    "aliases": [
+      "aug matrix"
+    ],
+    "tags": [
+      "linalg",
+      "217"
+    ],
+    "definition": "A matrix constructed similarly to a coefficient matrix but with information about constants in the linear system.\n\nFormed by collecting all constants on the opposite side as the variables and appending them as a column vector on the right of the coefficient matrix.\n\nThe augmented matrix is commonly denoted $[A | b]$ with coefficient matrix $A$ and constant vector $b$.\n\nExample:\n$ \\left| \\begin{array}{c}\n  2x + 8y + 4z = 2 \\\\\n  2x + 5y + z = 5 \\\\\n  4x + 10y - z = 1\n\\end{array} \\right| $ has a augmented matrix $\\left[ \\begin{array}{ccc|c}\n  2 & 8 & 4 & 2 \\\\\n  2 & 5 & 1 & 5\\\\\n  4 & 10 & -1 & 1\n\\end{array} \\right]$"
+  },
+  {
+    "term": "coefficient matrix",
+    "aliases": [
+      "coef matrix"
+    ],
+    "tags": [
+      "linalg",
+      "217"
+    ],
+    "definition": "The matrix containing the coefficients of the variables in a particular linear system.\n\nFor the linear system $Ax = b$, $A$ is the coefficient matrix.\n\nNote that:\n1. Each column corresponds to the coefficients for exactly one variable\n  a. Columns are generally ordered alphabetically by variable but\n     are not required to do so\n2. Each row corresponds to the coefficients for exactly one equation\n3. Constants are excluded\n\nExample:\n$ \\left| \\begin{array}{c}\n  2x + 8y + 4z = 2 \\\\\n  2x + 5y + z = 5 \\\\\n  4x + 10y - z = 1\n\\end{array} \\right| $ has a coefficient matrix $\\left[ \\begin{array}{ccc}\n  2 & 8 & 4 \\\\\n  2 & 5 & 1 \\\\\n  4 & 10 & -1\n\\end{array} \\right]$"
+  },
+  {
+    "term": "complex number",
+    "aliases": [],
+    "tags": [
+      "math",
+      "physics",
+      "380"
+    ],
+    "definition": "A number in $\\mathbb{C}$.\nA common form is $z = a + bi$ with $a, b \\in \\mathbb{R}$.\n\nBy euler's identity, $\\exists \\theta \\in \\mathbb{R}, \\ z = |z|e^{i\\theta}$\nThe modulus/norm of $z$ is $|z|$.\nThe phase of $z$ is $\\theta$"
+  },
+  {
+    "term": "dirac notation",
+    "aliases": [
+      "braket"
+    ],
+    "tags": [
+      "linalg",
+      "physics",
+      "380"
+    ],
+    "definition": "A notation for vectors typically used in quantum physics.\n\nComposed of the \"bra\" $\\bra{\\cdot}$ and the \"ket\" $\\ket{\\cdot}$\n\nA \"bra\" and a \"ket\" may be combined to form a \"braket\", which is equivalent to the inner product: $\\braket{\\cdot | \\cdot}$"
+  },
+  {
+    "term": "elementary row operations",
+    "aliases": [
+      "el row ops"
+    ],
+    "tags": [
+      "linalg",
+      "217"
+    ],
+    "definition": "The operations used to bring a matrix into reduced row-echelon form.\n\n1. Divide a row by a nonzero scalar\n2. Subtract a multiple of a row from another row\n3. Swap two rows"
+  },
+  {
+    "term": "linear combination",
+    "aliases": [
+      "lin combo"
+    ],
+    "tags": [
+      "linalg",
+      "217"
+    ],
+    "definition": "A vector $\\vec{b} \\in \\mathbb{R}^n$ is a linear combination of $\\vec{v}_1, \\ldots, \\vec{v}_m \\in \\mathbb{R}^n$ if  there exist scalars $x_1, \\ldots, x_m$ such that $\\vec{b} = x_1\\vec{v_1} + \\cdots + x_m\\vec{v}_m$.\n\nNote that a linear combination of columns in a matrix can be achieved with multiplication by a column vector on the right:\n$\\left[ \\begin{array}{ccc}\n  | & & | \\\\\n  \\vec{v}_1 & \\cdots & \\vec{v}_m \\\\\n  | & & |\n\\end{array} \\right] \\left[ \\begin{array}{c}\n  x_1 \\\\\n  \\vdots \\\\\n  x_m\n\\end{array} \\right] = x_1\\vec{v}_1 + \\cdots + x_m\\vec{v}_m$\n\nOr of rows of a matrix by a row vector on the left:\n\n$\\left[ \\begin{array}{ccc}\n  x_1 & \\cdots & x_m\n\\end{array} \\right] \\left[ \\begin{array}{ccc}\n  \\text{---} & \\vec{v}_1 & \\text{---} \\\\\n  \\ & \\vdots & \\ \\\\\n  \\text{---} & \\vec{v}_m & \\text{---} \\\\\n\\end{array} \\right] = x_1\\vec{v}_1 + \\cdots + x_m\\vec{v}_m$"
+  },
+  {
+    "term": "master theorem",
+    "aliases": [],
+    "tags": [
+      "cs",
+      "376"
+    ],
+    "definition": "Let $k \\geq 1, b > 1, d \\geq 0$ be constants that do not vary with $n$. Let $T(n)$ be a recurrence with base case $T(1) \\in O(1)$ of the following form: $T(n) = k \\cdot T(n/b) + O(n^d)$.\n\nNote that we ignore all floors/ceilings and additions/subtractions to the $n/b$ argument on the RHS.\n\nThen,\n\n$T(n) \\in \\left\\{\\begin{array}{cc}\n  O(n^d) & \\text{if } k < b^d \\\\\n  O(n^d\\log(n)) & \\text{if } k = b^d \\\\\n  O(n^{\\log_b(k)}) & \\text{if } k > b^d\n\\end{array}\\right.$\n\nFurther, the bounds are tight: the theorem also holds if all $O$s are replaced with $\\Theta$s"
+  },
+  {
+    "term": "rank",
+    "aliases": [],
+    "tags": [
+      "linalg",
+      "217"
+    ],
+    "definition": "The rank of a matrix $A$ is the number of leading $1$s in $\\text{rref}(A)$ and is denoted $\\text{rank}(A)$\n\nFor an $n \\times m$ matrix $A$, there is exactly one solution if $\\text{rank}(A) = n = m$"
+  },
+  {
+    "term": "reduced row-echelon form",
+    "aliases": [
+      "rref",
+      "reduced row echelon form"
+    ],
+    "tags": [
+      "linalg",
+      "217"
+    ],
+    "definition": "A matrix is said to be in reduced row-echelon form if it satisfies the following conditions:\n\n1. The first nonzero entry in any row is 1 (or the row is all 0)\n2. If a column contains a leading 1, all other entries in the column are 0\n3. The column index of leading 1s is strictly increasing\n\nWhen using only elementary row operations, a matrix $A$ can be transformed to exactly one matrix $B$ in RREF. This unique solution is denoted $B = \\text{rref}(A)$.\n\nExamples:\n$\\left[ \\begin{array}{cccc|c}\n  0 & \\boxed{1} & 0 & 0 & 1 \\\\\n  0 & 0 & \\boxed{1} & 0 & 7 \\\\\n  0 & 0 & 0 & \\boxed{1} & 3 \\\\\n  0 & 0 & 0 & 0 & 0 \\\\\n\\end{array} \\right]$ $\\left[ \\begin{array}{cccc|c}\n  \\boxed{1} & 0 & 0 & 1 & 0 \\\\\n  0 & \\boxed{1} & 0 & 2 & 0 \\\\\n  0 & 0 & \\boxed{1} & 3 & 0 \\\\\n  0 & 0 & 0 & 0 & \\boxed{1} \\\\\n\\end{array} \\right]$ $\\left[ \\begin{array}{ccccc}\n  0 & \\boxed{1} & 0 & 1 & 0 \\\\\n  0 & 0 & \\boxed{1} & 3 & 0 \\\\\n  0 & 0 & 0 & 0 & \\boxed{1} \\\\\n  0 & 0 & 0 & 0 & 0 \\\\\n\\end{array} \\right]$"
+  },
+  {
+    "term": "vector space",
+    "aliases": [],
+    "tags": [
+      "linalg",
+      "217"
+    ],
+    "definition": "A set $V$ with vector addition and scalar multiplication.\n\nThe following axioms must be satisfied:\n1. Closed under addition.\n2. Closed under scalar multiplication.\n3. Addition is associative.\n4. Addition is commutative.\n5. There is an additive identity. $\\exists 0_V \\ \\forall v \\in V, \\quad v + 0_V = 0_V + v = v$\n6. Scalar multiplication is \"associative\": $\\forall a, b \\in \\mathbb{R} \\ \\forall v \\in V, \\quad a(bv) = (ab)v$\n7. $\\forall v \\in V, \\quad 0v = 0_V$\n8. $\\forall v \\in V, \\quad 1v = v$\n9. Scalar multiplication distributes over any addition:\n  a. $\\forall v, w \\in V \\ \\forall \\lambda \\in \\mathbb{R}, \\quad \\lambda (v + w) = \\lambda v + \\lambda w$\n  b. $\\forall v \\in V \\ \\forall a, b \\in \\mathbb{R}, \\quad (a + b)v = av + bv$"
+  },
+  {
+    "term": "hermitian conjugate",
+    "aliases": [
+      "herm conj"
+    ],
+    "tags": [
+      "linalg",
+      "physics",
+      "380"
+    ],
+    "definition": "The Hermitian operator combines the transpose and the element-wise complex conjugate on a vector.\n\nLet $\\ket{\\psi} = \\left[\\begin{array}{c}\n  a_0 \\\\\n  \\vdots \\\\\n  a_n\n\\end{array}\\right]$ where $a_0, \\ldots, a_n \\in \\mathbb{C}$\n\n$\\bra{\\psi} = (\\ket{\\psi})^\\dagger = \\left[\\begin{array}{c}\n  a_0^* \\\\\n  \\vdots \\\\\n  a_n^*\n\\end{array}\\right]^\\top = \\left[ a_0^* \\ \\cdots \\ a_n^* \\right]$"
+  }
+]
